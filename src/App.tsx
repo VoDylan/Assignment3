@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react'
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import {Box, Checkbox, FormControlLabel, Grid, Radio, RadioGroup, Stack, Typography} from "@mui/material";
 import {LeftAlignedTextbox} from "./LeftAlignedTextbox.tsx";
 import './App.css'
 import {SecurityRequest} from "./SecurityRequestFormSubmission.ts"
@@ -9,10 +9,12 @@ function App() {
         name: "",
         priority: "",
         location: "",
-        securityoption: "",
-        catagories: "",
+        securityoption: [''],
+        categories: [''],
         status: "",
     })
+    const [submittedForms, setSubmittedForms] = useState<SecurityRequest[]>([]);
+
     function handleNameInput(e: ChangeEvent<HTMLInputElement>) {
         setResponses({ ...form, name: e.target.value });
     }
@@ -21,42 +23,53 @@ function App() {
     }function handleLocationInput(e: ChangeEvent<HTMLInputElement>) {
         setResponses({ ...form, location: e.target.value });
     }function handleSecurityOptionInput(e: ChangeEvent<HTMLInputElement>) {
-        setResponses({ ...form, securityoption: e.target.value });
+        const option = e.target.value;
+        const isChecked = e.target.checked;
+
+        // If the checkbox is checked, add the option to the array
+        // If it's unchecked, remove the option from the array
+        if (isChecked) {
+            setResponses({ ...form, securityoption: [...form.securityoption, option] });
+        } else {
+            setResponses({ ...form, securityoption: form.securityoption.filter(item => item !== option) });
+        }
     }
-    function handleCatagoriesInput(e: ChangeEvent<HTMLInputElement>) {
-        setResponses({ ...form, catagories: e.target.value });
+    function handleCategoriesInput(e: ChangeEvent<HTMLInputElement>) {
+        const option = e.target.value;
+        const isChecked = e.target.checked;
+
+        // If the checkbox is checked, add the option to the array
+        // If it's unchecked, remove the option from the array
+        if (isChecked) {
+            setResponses({ ...form, categories: [...form.categories, option] });
+        } else {
+            setResponses({ ...form, categories: form.categories.filter(item => item !== option) });
+        }
     }
     function handleStatusInput(e: ChangeEvent<HTMLInputElement>) {
         setResponses({ ...form, status: e.target.value });
     }
-/*    function handleRecipientNameInput(e: ChangeEvent<HTMLInputElement>) {
-        setResponses({ ...form, recipientName: e.target.value });
-    }
-
-    function handleMessageInput(e: ChangeEvent<HTMLInputElement>) {
-        setResponses({ ...form, message: e.target.value });
-    }*/
 
     function clear() {
         setResponses({
             name: "",
-            flowerType: "",
-            recipientName: "",
-            roomNumber: "",
-            message: "",
+            priority: "",
+            location: "",
+            securityoption: [''],
+            categories: [''],
+            status: "",
+        });
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach((checkbox) => {
+            (checkbox as HTMLInputElement).checked = false;
         });
     }
-/*
-    function handleFlowerTypeInput(event: SelectChangeEvent) {
-        setResponses({ ...form, flowerType: event.target.value });
-        return event.target.value;
+
+    function handleSubmit() {
+        setSubmittedForms([...submittedForms, form]);
+        clear(); // Clear the form after submission
     }
 
-    function handleRoomNumberInput(event: SelectChangeEvent) {
-        setResponses({ ...form, roomNumber: event.target.value });
-        return event.target.value;
-    }
-*/
 
 
     return (
@@ -84,7 +97,7 @@ function App() {
                     justifyContent={"space-between"}
                     boxShadow={4}
                     sx={{
-                        backgroundColor: "white",
+                        backgroundColor: "rgba(255, 255, 255, 0.9)",
                     }}
                 >
                     <Grid
@@ -101,11 +114,19 @@ function App() {
                             fontStyle={"Open Sans"}
                             fontSize={40}
                         >
-                            Flower Delivery Service Form
+                            Security Request Form
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography>Name:</Typography>
+                        {<Typography
+                            color={"black"}
+                            fontStyle={"Open Sans"}
+                            fontSize={15}
+                            fontWeight="bold"
+                            textAlign="center"
+                        >
+                            Name
+                        </Typography>}
                         <LeftAlignedTextbox
                             label={"Name"}
                             value={form.name}
@@ -114,43 +135,134 @@ function App() {
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography>What type of flowers will you be ordering?</Typography>
-                        <LeftAlignedTextbox
-                            label = {"Filler"}
-                            value={form.priority}
-                            onChange={handleNameInput}
-                            type={"text"}
+                        <Box>
+                            {<Typography
+                                color={"black"}
+                                fontStyle={"Open Sans"}
+                                fontSize={15}
+                                fontWeight="bold"
+                                textAlign="center"
+                            >
+                                Location
+                            </Typography>}
+                            <LeftAlignedTextbox
+                                label={"Location"}
+                                value={form.location}
+                                onChange={handleLocationInput}
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography color={"black"} fontStyle={"Open Sans"} fontSize={15} fontWeight="bold" textAlign="center"  sx={{ textDecoration: 'underline' }}>
+                            Security Options
+                        </Typography>
+                        <FormControlLabel
+                            control={<Checkbox value="Security" onChange={handleSecurityOptionInput} />}
+                            label={<Typography style={{ color: 'black' }}>Security</Typography>}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="Police" onChange={handleSecurityOptionInput} />}
+                            label={<Typography style={{ color: 'black' }}>Police</Typography>}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="Other" onChange={handleSecurityOptionInput} />}
+                            label={<Typography style={{ color: 'black' }}>Other</Typography>}
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        <Box>
-                            <Typography>Recipient Name:</Typography>
-                            <LeftAlignedTextbox
-                                label={"Recipient Name"}
-                                value={form.securityoption}
-                                onChange={handleRecipientNameInput}
-                            />
-                        </Box>
+                        <Typography color={"black"} fontStyle={"Open Sans"} fontSize={15} fontWeight="bold" textAlign="center"  sx={{ textDecoration: 'underline' }}>
+                            Problem I am Having
+                        </Typography>
+                        <FormControlLabel
+                            control={<Checkbox value="Feels Unsafe" onChange={handleCategoriesInput} />}
+                            label={<Typography style={{ color: 'black' }}>I Feel Unsafe</Typography>}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="Making Report" onChange={handleCategoriesInput} />}
+                            label={<Typography style={{ color: 'black' }}>I Would Like to Report Something</Typography>}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="Other" onChange={handleCategoriesInput} />}
+                            label={<Typography style={{ color: 'black' }}>Other</Typography>}
+                        />
                     </Grid>
                     <Grid item xs={6}>
-                        <Box>
-                            <Typography>Room Number:</Typography>
-                            <LeftAlignedTextbox
-                                label={"Recipient Name"}
-                                value={form.recipientName}
-                                onChange={handleRecipientNameInput}
+                        {<Typography
+                            color={"black"}
+                            fontStyle={"Open Sans"}
+                            fontSize={15}
+                            fontWeight="bold"
+                            textAlign="center"
+                            sx={{ textDecoration: 'underline' }}
+                        >
+                            Priority of Request
+                        </Typography>}
+                        <RadioGroup
+                            aria-label="priority"
+                            name="priority"
+                            value={form.priority}
+                            onChange={handlePriorityInput}
+                        >
+                            <FormControlLabel
+                                value="low"
+                                control={<Radio />}
+                                label={<Typography style={{ color: 'black', fontSize: 15}}>Low</Typography>}
                             />
-                        </Box>
+                            <FormControlLabel
+                                value="medium"
+                                control={<Radio />}
+                                label={<Typography style={{ color: 'black', fontSize: 15 }}>Medium</Typography>}
+                            />
+                            <FormControlLabel
+                                value="high"
+                                control={<Radio />}
+                                label={<Typography style={{ color: 'black', fontSize: 15 }}>High</Typography>}
+                            />
+                            <FormControlLabel
+                                value="EMERGENCY"
+                                control={<Radio />}
+                                label={<Typography style={{ color: 'red', fontSize: 15 }}>EMERGENCY</Typography>}
+                            />
+                        </RadioGroup>
                     </Grid>
                     <Grid item xs={6}>
-                        <Box>
-                            <Typography>Add a message (optional):</Typography>
-                            <LeftAlignedTextbox
-                                label={"Message"}
-                                value={form.message}
-                                onChange={handleMessageInput}
+                        {<Typography
+                            color={"black"}
+                            fontStyle={"Open Sans"}
+                            fontSize={15}
+                            fontWeight="bold"
+                            textAlign="center"
+                            sx={{ textDecoration: 'underline' }}
+                        >
+                            Status of Request
+                        </Typography>}
+                        <RadioGroup
+                            aria-label="status"
+                            name="status"
+                            value={form.status}
+                            onChange={handleStatusInput}
+                        >
+                            <FormControlLabel
+                                value="unassigned"
+                                control={<Radio />}
+                                label={<Typography style={{ color: 'black', fontSize: 15}}>Unassigned</Typography>}
                             />
-                        </Box>
+                            <FormControlLabel
+                                value="assigned"
+                                control={<Radio />}
+                                label={<Typography style={{ color: 'black', fontSize: 15 }}>Assigned</Typography>}
+                            />
+                            <FormControlLabel
+                                value="inProgress"
+                                control={<Radio />}
+                                label={<Typography style={{ color: 'black', fontSize: 15 }}>In Progress</Typography>}
+                            />
+                            <FormControlLabel
+                                value="closed"
+                                control={<Radio />}
+                                label={<Typography style={{ color: 'black', fontSize: 15 }}>Closed</Typography>}
+                            />
+                        </RadioGroup>
                     </Grid>
                     <Grid
                         item
@@ -158,8 +270,60 @@ function App() {
                         sx={{ display: "flex", my: 2, justifyContent: "center" }}
                     >
                         <Box>
-                            <SubmitButton text={"SUBMIT"} input={form} clear={clear} />
+                            <SubmitButton text={"SUBMIT"} input={form} clear={clear} handleSubmit={handleSubmit}/>
                         </Box>
+                    </Grid>
+                </Grid>
+            </Box>
+            <Box
+                sx={{
+                    flexGrow: 1,
+                    justifyContent: "center",
+                    justifySelf: "center",
+                    width: "90%",
+                    alignSelf: "center",
+                    mx: "5%",
+                }}
+            >
+                <Grid
+                    container
+                    direction={"row"}
+                    rowSpacing={2}
+                    columnSpacing={2}
+                    justifyContent={"space-between"}
+                    boxShadow={4}
+                    sx={{
+                        backgroundColor: "rgba(255, 255, 255, 0.9)",
+                    }}
+                >
+                    <Grid
+                        item
+                        xs={12}
+                        sx={{
+                            alignItems: "flexStart",
+                            backgroundColor: "#003A96",
+                        }}
+                    >
+                        <Typography
+                            color={"white"}
+                            align={"center"}
+                            fontStyle={"Open Sans"}
+                            fontSize={40}
+                        >
+                            Current Requests
+                        </Typography>
+                        {submittedForms.map((submittedForm, index) => (
+                            <Grid key={index}>
+                                <Typography
+                                    color={"white"}
+                                    align={"center"}
+                                    fontStyle={"Open Sans"}
+                                    fontSize={15}
+                                >
+                                    Name: {submittedForm.name} | Location: {submittedForm.location} | Priority: {submittedForm.priority} | Security Options: {submittedForm.securityoption.join(" ")} | Categories: {submittedForm.categories.join(" ")} | Status: {submittedForm.status}
+                                </Typography>
+                            </Grid>
+                        ))}
                     </Grid>
                 </Grid>
             </Box>

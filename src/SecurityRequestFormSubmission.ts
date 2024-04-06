@@ -3,9 +3,9 @@ export type SecurityRequest = {
   priority: string;
   location: string;
   //select between local or police
-  securityoption: string
+  securityoption: string[];
   //checkbox maybe?
-  catagories: string
+  categories: string[];
   //radio button
-  status: string
+  status: string;
 };

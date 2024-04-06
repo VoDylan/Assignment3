@@ -1,28 +1,41 @@
 import { useState, ChangeEvent } from 'react'
-import { Box, Grid, SelectChangeEvent, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import {LeftAlignedTextbox} from "./LeftAlignedTextbox.tsx";
 import './App.css'
-import {SecurityFormSubmission} from "./form.ts";
-
+import {SecurityRequest} from "./SecurityRequestFormSubmission.ts"
+import {SubmitButton} from "./SubmitButton.tsx";
 function App() {
-    const [form, setResponses] = useState<SecurityFormSubmission>({
+    const [form, setResponses] = useState<SecurityRequest>({
         name: "",
-        flowerType: "",
-        recipientName: "",
-        roomNumber: "",
-        message: "",
-    });
+        priority: "",
+        location: "",
+        securityoption: "",
+        catagories: "",
+        status: "",
+    })
     function handleNameInput(e: ChangeEvent<HTMLInputElement>) {
         setResponses({ ...form, name: e.target.value });
     }
-
-    function handleRecipientNameInput(e: ChangeEvent<HTMLInputElement>) {
+    function handlePriorityInput(e: ChangeEvent<HTMLInputElement>) {
+        setResponses({ ...form, priority: e.target.value });
+    }function handleLocationInput(e: ChangeEvent<HTMLInputElement>) {
+        setResponses({ ...form, location: e.target.value });
+    }function handleSecurityOptionInput(e: ChangeEvent<HTMLInputElement>) {
+        setResponses({ ...form, securityoption: e.target.value });
+    }
+    function handleCatagoriesInput(e: ChangeEvent<HTMLInputElement>) {
+        setResponses({ ...form, catagories: e.target.value });
+    }
+    function handleStatusInput(e: ChangeEvent<HTMLInputElement>) {
+        setResponses({ ...form, status: e.target.value });
+    }
+/*    function handleRecipientNameInput(e: ChangeEvent<HTMLInputElement>) {
         setResponses({ ...form, recipientName: e.target.value });
     }
 
     function handleMessageInput(e: ChangeEvent<HTMLInputElement>) {
         setResponses({ ...form, message: e.target.value });
-    }
+    }*/
 
     function clear() {
         setResponses({
@@ -33,6 +46,7 @@ function App() {
             message: "",
         });
     }
+/*
     function handleFlowerTypeInput(event: SelectChangeEvent) {
         setResponses({ ...form, flowerType: event.target.value });
         return event.target.value;
@@ -42,6 +56,7 @@ function App() {
         setResponses({ ...form, roomNumber: event.target.value });
         return event.target.value;
     }
+*/
 
 
     return (
@@ -102,7 +117,7 @@ function App() {
                         <Typography>What type of flowers will you be ordering?</Typography>
                         <LeftAlignedTextbox
                             label = {"Filler"}
-                            value={form.roomNumber}
+                            value={form.priority}
                             onChange={handleNameInput}
                             type={"text"}
                         />
@@ -112,7 +127,7 @@ function App() {
                             <Typography>Recipient Name:</Typography>
                             <LeftAlignedTextbox
                                 label={"Recipient Name"}
-                                value={form.recipientName}
+                                value={form.securityoption}
                                 onChange={handleRecipientNameInput}
                             />
                         </Box>
@@ -120,11 +135,10 @@ function App() {
                     <Grid item xs={6}>
                         <Box>
                             <Typography>Room Number:</Typography>
-                            <DropDown
-                                items={nodeNumbers}
-                                label={"Room Number"}
-                                returnData={form.roomNumber}
-                                handleChange={handleRoomNumberInput}
+                            <LeftAlignedTextbox
+                                label={"Recipient Name"}
+                                value={form.recipientName}
+                                onChange={handleRecipientNameInput}
                             />
                         </Box>
                     </Grid>

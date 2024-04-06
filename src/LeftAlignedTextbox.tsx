@@ -1,6 +1,5 @@
 import React from "react";
 import TextField from '@mui/material/TextField';
-import {makeStyles} from "@mui/material";
 
 
 interface TextboxProps {
@@ -10,10 +9,9 @@ interface TextboxProps {
   type?: "text" | "password"; // Define type prop to indicate input type
 }
 export const LeftAlignedTextbox = (props: TextboxProps) => {
-  const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div>
       <TextField
         id="outlined-basic"
         label={props.label}
@@ -26,13 +24,3 @@ export const LeftAlignedTextbox = (props: TextboxProps) => {
   );
 };
 
-const useStyles = makeStyles({
-  root: {
-    display: "flex",
-    justifyContent: "flex-start",
-    "& .MuiTextField-root": {
-      margin: "10px",
-      width: "200px", // Adjust width as needed
-    },
-  },
-});

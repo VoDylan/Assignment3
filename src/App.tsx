@@ -153,36 +153,36 @@ function App() {
                         </Box>
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography color={"black"} fontStyle={"Open Sans"} fontSize={15} fontWeight="bold" textAlign="center"  sx={{ textDecoration: 'underline' }}>
+                        <Typography color={"black"} fontStyle={"Open Sans"} fontSize={15} fontWeight="bold" textAlign="center" sx={{ textDecoration: 'underline' }}>
                             Security Options
                         </Typography>
                         <FormControlLabel
-                            control={<Checkbox value="Security" onChange={handleSecurityOptionInput} />}
+                            control={<Checkbox value="Security" checked={form.securityoption.includes('Security')} onChange={handleSecurityOptionInput} />}
                             label={<Typography style={{ color: 'black' }}>Security</Typography>}
                         />
                         <FormControlLabel
-                            control={<Checkbox value="Police" onChange={handleSecurityOptionInput} />}
+                            control={<Checkbox value="Police" checked={form.securityoption.includes('Police')} onChange={handleSecurityOptionInput} />}
                             label={<Typography style={{ color: 'black' }}>Police</Typography>}
                         />
                         <FormControlLabel
-                            control={<Checkbox value="Other" onChange={handleSecurityOptionInput} />}
+                            control={<Checkbox value="Other" checked={form.securityoption.includes('Other')} onChange={handleSecurityOptionInput} />}
                             label={<Typography style={{ color: 'black' }}>Other</Typography>}
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography color={"black"} fontStyle={"Open Sans"} fontSize={15} fontWeight="bold" textAlign="center"  sx={{ textDecoration: 'underline' }}>
+                        <Typography color={"black"} fontStyle={"Open Sans"} fontSize={15} fontWeight="bold" textAlign="center" sx={{ textDecoration: 'underline' }}>
                             Problem I am Having
                         </Typography>
                         <FormControlLabel
-                            control={<Checkbox value="Feels Unsafe" onChange={handleCategoriesInput} />}
+                            control={<Checkbox value="Feels Unsafe" checked={form.categories.includes('Feels Unsafe')} onChange={handleCategoriesInput} />}
                             label={<Typography style={{ color: 'black' }}>I Feel Unsafe</Typography>}
                         />
                         <FormControlLabel
-                            control={<Checkbox value="Making Report" onChange={handleCategoriesInput} />}
+                            control={<Checkbox value="Making Report" checked={form.categories.includes('Making Report')} onChange={handleCategoriesInput} />}
                             label={<Typography style={{ color: 'black' }}>I Would Like to Report Something</Typography>}
                         />
                         <FormControlLabel
-                            control={<Checkbox value="Other" onChange={handleCategoriesInput} />}
+                            control={<Checkbox value="Other" checked={form.categories.includes('Other')} onChange={handleCategoriesInput} />}
                             label={<Typography style={{ color: 'black' }}>Other</Typography>}
                         />
                     </Grid>
@@ -309,6 +309,7 @@ function App() {
                             align={"center"}
                             fontStyle={"Open Sans"}
                             fontSize={40}
+                            sx={{ textDecoration: 'underline' }}
                         >
                             Current Requests
                         </Typography>

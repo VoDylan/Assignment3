@@ -1,5 +1,5 @@
 #root {
-  max-height: 720px;
+  max-height: 7200px;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -9,8 +9,8 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url('https://media.istockphoto.com/id/1334947575/vector/law-enforcement-police-abstract-background.jpg?s=612x612&w=0&k=20&c=4X68xWUWmWYCWiyjclMn5xj0e1zYxN41XYBYxYgnTGQ='); /* Replace 'path_to_your_image.jpg' with the path to your image */
-  background-size: cover;
+  background-image: url('https://media.istockphoto.com/id/1334947575/vector/law-enforcement-police-abstract-background.jpg?s=612x612&w=0&k=20&c=4X68xWUWmWYCWiyjclMn5xj0e1zYxN41XYBYxYgnTGQ=');
+  background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 
